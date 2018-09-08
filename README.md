@@ -5,8 +5,10 @@
 - [x] load params from files
 - [x] gradient dsec
 - [x] params update
-- [ ] gradient checking
 - [x] batch processing
+- [ ] accuracy
+- [ ] plotting
+- [ ] gradient checking
 - [ ] momentum gradient
 - [ ] 14_100_40_4 network
 - [ ] 14_28x6_4 network

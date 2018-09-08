@@ -2,11 +2,12 @@ import numpy as np
 
 
 class Output:
-    def __init__(self, in_dim, out_dim):
+    def __init__(self, in_dim, out_dim, name):
         self.w = np.random.randn(in_dim, out_dim) * np.sqrt(2.0 / out_dim)
         self.b = np.zeros(out_dim)
         self.dw = np.zeros((in_dim, out_dim))
         self.db = np.zeros(out_dim)
+        self.name = name
 
     def _softmax(self, x):
         exps = np.exp(x)
@@ -23,9 +24,9 @@ class Output:
         return dx_wrt_output.dot(self.w.T)
 
     def load_params(self, w, b):
-        assert(self.w.shape[0], w.shape[0])
-        assert(self.w.shape[1], w.shape[1])
-        assert(self.b.shape[0], b.shape[0])
+        assert self.w.shape[0] == w.shape[0]
+        assert self.w.shape[1] == w.shape[1]
+        assert self.b.shape[0] == b.shape[0]
         self.w = w
         self.b = b
 
@@ -43,7 +44,7 @@ class Output:
 
     def bwd(self, y):
         dx_wrt_fc_out = self._delta_cross_entropy(self.fc_out, y)
-        # print("delta cross/output fc out grad", dx_wrt_fc_out)
+        print("delta cross/output fc out grad", dx_wrt_fc_out)
         self.dw = self.in_data.T.dot(dx_wrt_fc_out)
         self.db = dx_wrt_fc_out.sum(axis=0)
         return self._fc_dx(dx_wrt_fc_out)
@@ -51,3 +52,8 @@ class Output:
     def upd(self, lr):
         self.w -= lr * self.dw
         self.b -= lr * self.db
+
+    def save_params(self):
+        print("dw dtype", self.dw.dtype)
+        np.savetxt("./save_params/"+self.name+"_w.csv", self.dw, delimiter=',')
+        np.savetxt("./save_params/"+self.name+"_b.csv", [self.db], delimiter=',')

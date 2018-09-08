@@ -1,10 +1,11 @@
 import numpy as np
 class Hidden:
-    def __init__(self, in_dim, out_dim):
+    def __init__(self, in_dim, out_dim, name):
         self.w = np.random.randn(in_dim, out_dim) * np.sqrt(2.0 / out_dim)
         self.b = np.zeros(out_dim)
         self.dw = np.zeros((in_dim, out_dim))
         self.db = np.zeros(out_dim)
+        self.name = name
 
     def _relu(self, x):
         return np.maximum(0, x)
@@ -18,9 +19,9 @@ class Hidden:
         return dx_wrt_output.dot(self.w.T)
 
     def load_params(self, w, b):
-        assert(self.w.shape[0], w.shape[0])
-        assert(self.w.shape[1], w.shape[1])
-        assert(self.b.shape[0], b.shape[0])
+        assert self.w.shape[0] == w.shape[0]
+        assert self.w.shape[1] == w.shape[1]
+        assert self.b.shape[0] == b.shape[0]
         self.w = w
         self.b = b
 
@@ -40,3 +41,7 @@ class Hidden:
     def upd(self, lr):
         self.w -= lr * self.dw
         self.b -= lr * self.db
+
+    def save_params(self):
+        np.savetxt("./save_params/"+self.name+"_w.csv", self.dw, delimiter=',')
+        np.savetxt("./save_params/"+self.name+"_b.csv", [self.db], delimiter=',')

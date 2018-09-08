@@ -4,8 +4,8 @@ import numpy as np
 def load_datasets():
     x_train = np.genfromtxt("datasets/x_train.csv", delimiter=',')
     x_test = np.genfromtxt("datasets/x_test.csv", delimiter=',')
-    y_train = np.genfromtxt("datasets/y_train.csv", delimiter=',')
-    y_test = np.genfromtxt("datasets/y_test.csv", delimiter=',')
+    y_train = np.genfromtxt("datasets/y_train.csv", delimiter=',', dtype='int')
+    y_test = np.genfromtxt("datasets/y_test.csv", delimiter=',', dtype='int')
     return x_train, x_test, y_train, y_test
 
 
