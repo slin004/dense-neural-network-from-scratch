@@ -18,6 +18,9 @@ class Hidden:
         return dx_wrt_output.dot(self.w.T)
 
     def load_params(self, w, b):
+        assert(self.w.shape[0], w.shape[0])
+        assert(self.w.shape[1], w.shape[1])
+        assert(self.b.shape[0], b.shape[0])
         self.w = w
         self.b = b
 
