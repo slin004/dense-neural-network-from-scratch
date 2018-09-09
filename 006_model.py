@@ -67,6 +67,7 @@ class Model:
                 # metrics
                 y_hat = np.argmax(sm_out, axis=1)
                 infer_correct += (y_hat == y_batch).sum()
+                # print("***debug y_hat ", y_hat, " y ", y_batch, " number of correct", (y_hat == y_batch).sum())
                 total_loss += self.layer_o.cross_en(y_batch)
                 # print("loss - ",layer_o.cross_en(y_batch))
 
@@ -128,7 +129,6 @@ class Model:
         # metrics per epoch
         loss = total_loss/num_sample
         accuracy = infer_correct/num_sample
-        # print("validation: loss: %f accuracy: %f" % (loss, accuracy))
         return loss, accuracy
 
     def do_save_params(self, dir):
@@ -149,7 +149,6 @@ def do_net1(verification=False, lr=0.01, batch=1, epoch=1, beta=0.):
         {"name": "40x4", "in_dim": 40, "out_dim": 4},
     ]
     net1 = Model(net1_layer_config, model_name="100-40-4",beta=0.)
-    # w, b = load_100_40_4_params()
 
     if verification:
         X = np.array([[-1, 1, 1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, 1]])
@@ -230,6 +229,6 @@ if __name__ == "__main__":
     # do_net1(verification=True)
     # do_net2(verification=True)
     # do_net3(verification=True)
-    do_net1(epoch=300, batch=16)
+    do_net1(epoch=1, batch=16)
     # do_net2()
     # do_net3()

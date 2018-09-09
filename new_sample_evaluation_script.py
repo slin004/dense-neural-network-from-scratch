@@ -7,11 +7,8 @@ import zipfile
     You are expected to upload a e*******.zip file, inside you should have a folder Question_2 which contains 6 gradients.csv file.
     For verification, you can comment out the line10 to 13, and change the truth_path and ID to 'b', however, do note the grading process WILL contain these lines.
 """
-# ID = 'given_params'
-ID = 'to_submit_params'
-# zip_ref = zipfile.ZipFile(ID+'.zip', 'r')
-# zip_ref.extractall('.')
-# zip_ref.close()
+# ID = 'to_submit_params'
+ID = 'given_params'
 
 file_name = ['dw-100-40-4.csv', 'db-100-40-4.csv', 'dw-28-6-4.csv', 'db-28-6-4.csv', 'dw-14-28-4.csv', 'db-14-28-4.csv']
 
