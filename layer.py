@@ -39,7 +39,8 @@ class Layer:
 class Output(Layer):
 
     def activation(self, x):
-        exps = np.exp(x)
+        exps = np.exp(x - np.max(x))
+        # exps = np.exp(x)
         return exps / np.sum(exps, axis=1, keepdims=True)
 
     def _delta_cross_entropy(self, X, y):
