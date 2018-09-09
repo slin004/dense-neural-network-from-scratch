@@ -49,7 +49,7 @@ class Model:
         plt_test_acc = list()
         plt_title = 'Network_%s_Batch_%d' % (self.model_name, batch)
         if self.beta != 0:
-            plt_title += 'Beta_%.1f' % self.beta
+            plt_title += '_Beta_%.1f' % self.beta
 
         for epoch in range(epochs):
             batch_p = 0
@@ -84,7 +84,8 @@ class Model:
             # metrics per epoch/iter
             loss = total_loss/num_sample
             accuracy = infer_correct/num_sample
-            print("%d train: loss: %f accuracy: %f" % (epoch, loss, accuracy))
+            print("%d train: loss: %f accuracy: %f(%d/%d)" %
+                (epoch, loss, accuracy, infer_correct, num_sample))
             plt_iter.append(epoch)
             plt_train_loss.append(loss)
             plt_train_acc.append(accuracy)
@@ -93,7 +94,6 @@ class Model:
                 test_loss, test_acc = self.test(m_x_test, m_y_test)
                 plt_test_loss.append(test_loss)
                 plt_test_acc.append(test_acc)
-                print("%d test: loss: %f accuracy: %f" % (epoch, test_loss, test_acc))
 
             # stats
             total_loss = 0
@@ -129,6 +129,7 @@ class Model:
         # metrics per epoch
         loss = total_loss/num_sample
         accuracy = infer_correct/num_sample
+        print("test: loss: %f accuracy: %f(%d/%d)" % (loss, accuracy, infer_correct, num_sample))
         return loss, accuracy
 
     def do_save_params(self, dir):
@@ -178,7 +179,7 @@ def do_net2(verification=False, lr=0.01, batch=1, epoch=1, beta=0.):
         {"name": "28x28", "in_dim": 28, "out_dim": 28},
         {"name": "40x4", "in_dim": 28, "out_dim": 4},
     ]
-    net = Model(layer_config, model_name="28-6-4", beta=0.9)
+    net = Model(layer_config, model_name="28-6-4", beta=beta)
 
     if verification:
         X = np.array([[-1, 1, 1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, 1]])
@@ -204,7 +205,7 @@ def do_net3(verification=False, lr=0.01, batch=1, epoch=1, beta=0.):
 
     layer_config.append({"name": "14x4", "in_dim": 14, "out_dim": 4})
 
-    net = Model(layer_config, model_name="14-28-4", beta=0.9)
+    net = Model(layer_config, model_name="14-28-4", beta=beta)
 
     if verification:
         X = np.array([[-1, 1, 1, 1, -1, -1, 1, -1, 1, 1, -1, -1, 1, 1]])
@@ -229,6 +230,7 @@ if __name__ == "__main__":
     # do_net1(verification=True)
     # do_net2(verification=True)
     # do_net3(verification=True)
-    do_net1(epoch=1, batch=16)
+    # do_net1(epoch=300, batch=16)
+    do_net2(epoch=300, batch=16)
     # do_net2()
     # do_net3()
