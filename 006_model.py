@@ -1,4 +1,5 @@
 import numpy as np
+import time
 from layer import Output, Hidden
 from copy import deepcopy
 from helper import load_datasets
@@ -227,10 +228,15 @@ def do_net3(verification=False, lr=0.01, batch=1, epoch=1, beta=0.):
 
 if __name__ == "__main__":
     np.random.seed(0)
+    start_time = time.time()
     # do_net1(verification=True)
     # do_net2(verification=True)
     # do_net3(verification=True)
     # do_net1(epoch=300, batch=16)
-    do_net2(epoch=300, batch=16)
-    # do_net2()
-    # do_net3()
+    do_net1(epoch=19, batch=1)
+    # do_net2(epoch=300, batch=16)
+    # do_net2(epoch=19, batch=1)
+    # do_net3(epoch=300, batch=16, beta=0.8)
+    # do_net3(epoch=19, batch=1)
+    elapsed_time = time.time() - start_time
+    print(elapsed_time)
