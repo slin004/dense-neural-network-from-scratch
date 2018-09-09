@@ -6,10 +6,11 @@
 - [x] gradient dsec
 - [x] params update
 - [x] batch processing
-- [ ] accuracy
+- [x] accuracy
+- [x] momentum gradient
+- [x] 14_100_40_4 network
+- [x] 14_28x6_4 network
+- [x] 14_14x28_4 network
 - [ ] plotting
 - [ ] gradient checking
-- [ ] momentum gradient
-- [ ] 14_100_40_4 network
-- [ ] 14_28x6_4 network
-- [ ] 14_14x28_4 network
+- [ ] add description how to do it step by step
