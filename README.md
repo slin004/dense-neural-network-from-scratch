@@ -11,7 +11,7 @@
 - [x] 14_100_40_4 network
 - [x] 14_28x6_4 network
 - [x] 14_14x28_4 network
-- [ ] plotting
+- [x] plotting
 - [ ] gradient checking
 
 ## tips for muggle like me:
