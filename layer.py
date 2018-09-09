@@ -3,12 +3,15 @@ from copy import deepcopy
 
 
 class Layer:
-    def __init__(self, in_dim, out_dim, name):
+    def __init__(self, in_dim, out_dim, name, beta=0):
         self.w = np.random.randn(in_dim, out_dim) * np.sqrt(2.0 / out_dim)
         self.b = np.zeros(out_dim)
         self.dw = np.zeros((in_dim, out_dim))
         self.db = np.zeros(out_dim)
         self.name = name
+        self.beta = beta
+        self.dw_prev = list()
+        self.db_prev = list()
 
     def upd(self, lr):
         self.w -= lr * self.dw
@@ -23,11 +26,26 @@ class Layer:
 
     def fc_pass_grad(self, grad_wrt_fc_out):
         # print("delta cross/output fc out grad", grad_wrt_fc_out)
-        self.dw = np.dot(self.inputs_a.T, grad_wrt_fc_out)
-        # print("********debug", self.dw)
-        self.db = grad_wrt_fc_out.sum(axis=0)
-        # print("delta b", self.db)
-        return grad_wrt_fc_out.dot(self.w.T)
+        if len(self.dw_prev) == 0:
+            self.dw_prev = deepcopy(np.dot(self.inputs_a.T, grad_wrt_fc_out))
+            self.db_prev = deepcopy(grad_wrt_fc_out.sum(axis=0))
+
+        if self.beta != 0:
+            self.dw = (1-self.beta) * np.dot(self.inputs_a.T, grad_wrt_fc_out) + \
+                self.beta * self.dw_prev
+            self.db = (1-self.beta) * grad_wrt_fc_out.sum(axis=0) + \
+                self.beta * self.db_prev
+            self.dw_prev = self.dw
+            self.db_prev = self.db
+            return grad_wrt_fc_out.dot(self.w.T)
+        else:
+            assert grad_wrt_fc_out.shape[0] == self.inputs_a.shape[0]
+            assert grad_wrt_fc_out.shape[1] == self.db.shape[0]
+            self.dw = np.dot(self.inputs_a.T, grad_wrt_fc_out)
+            self.db = grad_wrt_fc_out.sum(axis=0)
+            # print("********debug", self.dw)
+            # print("delta b", self.db)
+            return grad_wrt_fc_out.dot(self.w.T)
 
     def fwd(self, x):
         self.inputs_a = deepcopy(x)
