@@ -30,6 +30,15 @@ def load_100_40_4_params():
     return w, b
 
 
+def save_params_to_csv(dw, db, model_name):
+    with open("./save_params/dw-" + model_name + ".csv",'ab') as csv_file:
+        for param in dw:
+            np.savetxt(csv_file, param, delimiter=',')
+    with open("./save_params/db-" + model_name + ".csv",'ab') as csv_file:
+        for param in db:
+            np.savetxt(csv_file, [param], delimiter=',')
+
+
 if __name__ == "__main__":
     # x_train, x_test, y_train, y_test = load_datasets()
     # print(x_train[:10])

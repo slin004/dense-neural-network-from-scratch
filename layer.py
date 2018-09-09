@@ -14,10 +14,6 @@ class Layer:
         self.w -= lr * self.dw
         self.b -= lr * self.db
 
-    def save_params(self):
-        np.savetxt("./save_params/" + self.name + "_w.csv", self.dw, delimiter=',')
-        np.savetxt("./save_params/" + self.name + "_b.csv", [self.db], delimiter=',')
-
     def load_params(self, w, b):
         assert self.w.shape[0] == w.shape[0]
         assert self.w.shape[1] == w.shape[1]
